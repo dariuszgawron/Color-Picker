@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Color picker</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div class="main">
+        <div class="box">
+            <div class="box-header">
+                <h1 class="box-header__title">
+                    Color picker
+                </h1>
+            </div>
+            <div class="box-content">
+                <div class="slider">
+                    <input type="range" class="slider__input slider__input--red" min=0 max=255>
+                </div>
+                <div class="slider">
+                    <input type="range" class="slider__input slider__input--green" min=0 max=255>
+                </div>
+                <div class="slider">
+                    <input type="range" class="slider__input slider__input--blue" min=0 max=255>
+                </div>
+            </div>
+            <div class="box-content">
+                <div class="form__group">
+                    <label class="form__label" for="name">Name</label>
+                    <input class="form__input" type="text" name="name">
+                </div>
+                <div class="form__group">
+                    <label class="form__label" for="rgb">Rgb</label>
+                    <input class="form__input" type="text" name="rgb">
+                </div>
+                <div class="form__group">
+                    <label class="form__label" for="hex">Hex</label>
+                    <input class="form__input" type="text" name="hex">
+                </div>
+                <div class="form__group">
+                    <label class="form__label" for="hsv">Hsv</label>
+                    <input class="form__input" type="text" name="hsv">
+                </div>
+                <div class="form__group">
+                    <label class="form__label" for="hsl">Hsl</label>
+                    <input class="form__input" type="text" name="hsl">
+                </div>
+                <div class="form__group">
+                    <label class="form__label" for="hwb">Hwb</label>
+                    <input class="form__input" type="text" name="hwb">
+                </div>
+                <div class="form__group">
+                    <label class="form__label" for="cmyk">Cmyk</label>
+                    <input class="form__input" type="text" name="cmyk">
+                </div>
+                <div class="form__group">
+                    <label class="form__label" for="ncol">Ncol</label>
+                    <input class="form__input" type="text" name-"ncol">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
