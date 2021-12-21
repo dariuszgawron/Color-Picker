@@ -160,43 +160,62 @@ const getHexValue = (red, green, blue) => {
     return `#${red.toString(16).padStart(2,'0')}${green.toString(16).padStart(2,'0')}${blue.toString(16).padStart(2,'0')}`;
 }
 const getHsvValue = (red, green, blue) => {
-    const r = red / 255;
-    const g = green / 255;
-    const b = blue / 255;
-    const cMax = Math.max(r, g, b);
-    const cMin = Math.min(r, g, b);
+    red /= 255;
+    green /= 255;
+    blue /= 255;
+    const cMax = Math.max(red, green, blue);
+    const cMin = Math.min(red, green, blue);
     const delta = cMax - cMin;
-    const hue = 0;
-    const saturation = 0;
-    const value = cMax;
+    let hue = (delta === 0) ? 0 :
+        (cMax === red) ? 60 * (((green - blue) / delta) % 6) :
+        (cMax === green) ? 60 * ((blue - red) / delta + 2) :
+        60 * ((red - green) / delta + 4);
+    let saturation = cMax === 0 ? 0 : (delta / cMax);
+    let value = cMax;
+    hue = Math.round(hue);
+    if (hue < 0) hue += 360;
+    saturation = (saturation * 100).toFixed();
+    value = (value * 100).toFixed();
     return `${hue}°, ${saturation}%, ${value}%`;
 }
 const getHslValue = (red, green, blue) => {
-    const r = red / 255;
-    const g = green / 255;
-    const b = blue / 255;
-    const cMax = Math.max(r, g, b);
-    const cMin = Math.min(r, g, b);
+    red /= 255;
+    green /= 255;
+    blue /= 255;
+    const cMax = Math.max(red, green, blue);
+    const cMin = Math.min(red, green, blue);
     const delta = cMax - cMin;
-    const hue = 0;
-    const saturation = 0;
-    const lightness = (cMax+cMin)/2;
+    let hue = (delta === 0) ? 0 :
+        (cMax === red) ? 60 * (((green - blue) / delta) % 6) :
+        (cMax === green) ? 60 * ((blue - red) / delta + 2) :
+        60 * ((red - green) / delta + 4)
+    let lightness = (cMax + cMin) / 2;
+    let saturation = (delta === 0) ? 0 : delta / (1 - Math.abs(2 * lightness - 1));
+    hue = Math.round(hue);
+    if (hue < 0) hue += 360;
+    lightness = (lightness * 100).toFixed();
+    saturation = (saturation * 100).toFixed();
     return `${hue}°, ${saturation}%, ${lightness}%`;
 }
 const getCmykValue = (red, green, blue) => {
-    const r = red / 255;
-    const g = green / 255;
-    const b = blue / 255;
-    // console.log(r + ' ' + g + ' ' + b);
-    const k = Math.round(((1 - Math.max(r, g, b)) + Number.EPSILON) * 100);
-    const c = Math.round((((1 - r - k) / (1 - k)) + Number.EPSILON) * 100);
-    const m = Math.round((((1 - g - k) / (1 - k)) + Number.EPSILON) * 100);
-    const y = Math.round((((1 - b - k) / (1 - k)) + Number.EPSILON) * 100);
-    return `${c}%, ${m}%, ${y}%, ${k}%`;
+    red /= 255;
+    green /= 255;
+    blue /= 255;
+    let key = 1 - Math.max(red, green, blue);
+    let cyan = (1 - red - key) / (1 - key);
+    let magenta = (1 - green - key) / (1 - key);
+    let yellow = (1 - blue - key) / (1 - key);
+    key = (key * 100).toFixed();
+    cyan = (cyan * 100).toFixed();
+    magenta = (magenta * 100).toFixed();
+    yellow = (yellow * 100).toFixed();
+    return `${cyan}%, ${magenta}%, ${yellow}%, ${key}%`;
 }
 const getHwbValue = (red, green, blue) => {
-
-    return ``;
+    const h = 0;
+    const w = Math.min(red, green, blue);
+    const b = 1 - Math.max(red, green, blue);
+    return `${h}°, ${w}%, ${b}%`;
 }
 const getNcolValue = (red, green, blue) => {
     return ``;
