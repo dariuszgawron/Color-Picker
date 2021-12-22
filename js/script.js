@@ -1,15 +1,17 @@
+// Sliders
 const redRange = document.querySelector('.slider__input--red');
 const greenRange = document.querySelector('.slider__input--green');
 const blueRange = document.querySelector('.slider__input--blue');
 
-const inputRGB = document.querySelector('.form__input[name=rgb]');
-const inputHEX = document.querySelector('.form__input[name=hex]');
-const inputHSV = document.querySelector('.form__input[name=hsv]');
-const inputHSL = document.querySelector('.form__input[name=hsl]');
-const inputCMYK = document.querySelector('.form__input[name=cmyk]');
-const inputHWB = document.querySelector('.form__input[name=hwb]');
-const inputNCOL = document.querySelector('.form__input[name=ncol]');
-const inputNAME = document.querySelector('.form__input[name=name]');
+// Color outputs
+const inputRGB = document.querySelector('.form-fieldset__input[name=rgb]');
+const inputHEX = document.querySelector('.form-fieldset__input[name=hex]');
+const inputHSV = document.querySelector('.form-fieldset__input[name=hsv]');
+const inputHSL = document.querySelector('.form-fieldset__input[name=hsl]');
+const inputCMYK = document.querySelector('.form-fieldset__input[name=cmyk]');
+const inputHWB = document.querySelector('.form-fieldset__input[name=hwb]');
+// const inputNCOL = document.querySelector('.form-fieldset__input[name=ncol]');
+const inputNAME = document.querySelector('.form-fieldset__input[name=name]');
 
 const colorNames = {
     "#00bfff": "deepskyblue",
@@ -153,6 +155,8 @@ const colorNames = {
     "#ffffff": "white"
 }
 
+
+// Color converters
 const getRgbValue = (red, green, blue) => {
     return `${red}, ${green}, ${blue}`;
 }
@@ -212,10 +216,23 @@ const getCmykValue = (red, green, blue) => {
     return `${cyan}%, ${magenta}%, ${yellow}%, ${key}%`;
 }
 const getHwbValue = (red, green, blue) => {
-    const h = 0;
-    const w = Math.min(red, green, blue);
-    const b = 1 - Math.max(red, green, blue);
-    return `${h}°, ${w}%, ${b}%`;
+    red /= 255;
+    green /= 255;
+    blue /= 255;
+    const cMax = Math.max(red, green, blue);
+    const cMin = Math.min(red, green, blue);
+    const delta = cMax - cMin;
+    let hue = (delta === 0) ? 0 :
+        (cMax === red) ? 60 * (((green - blue) / delta) % 6) :
+        (cMax === green) ? 60 * ((blue - red) / delta + 2) :
+        60 * ((red - green) / delta + 4);
+    let whiteness = cMin;
+    let blackness = 1 - cMax;
+    hue = Math.round(hue);
+    if (hue < 0) hue += 360;
+    whiteness = (whiteness * 100).toFixed();
+    blackness = (blackness * 100).toFixed();
+    return `${hue}°, ${whiteness}%, ${blackness}%`;
 }
 const getNcolValue = (red, green, blue) => {
     return ``;
@@ -236,10 +253,13 @@ const calculateColors = () => {
     inputHSL.value = getHslValue(red, green, blue);
     inputCMYK.value = getCmykValue(red, green, blue);
     inputHWB.value = getHwbValue(red, green, blue);
-    inputNCOL.value = getNcolValue(red, green, blue);
+    // inputNCOL.value = getNcolValue(red, green, blue);
     inputNAME.value = getNameValue(red, green, blue);
+
+    document.body.style.backgroundColor = `rgb(${red},${green},${blue})`;
 }
 
+// Listeners
 window.addEventListener('load', calculateColors);
 redRange.addEventListener('input', calculateColors);
 greenRange.addEventListener('input', calculateColors);
