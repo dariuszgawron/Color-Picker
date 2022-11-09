@@ -10,7 +10,6 @@ const inputHSV = document.querySelector('.form-fieldset__input[name=hsv]');
 const inputHSL = document.querySelector('.form-fieldset__input[name=hsl]');
 const inputCMYK = document.querySelector('.form-fieldset__input[name=cmyk]');
 const inputHWB = document.querySelector('.form-fieldset__input[name=hwb]');
-// const inputNCOL = document.querySelector('.form-fieldset__input[name=ncol]');
 const inputNAME = document.querySelector('.form-fieldset__input[name=name]');
 
 const colorNames = {
@@ -155,7 +154,6 @@ const colorNames = {
     "#ffffff": "white"
 }
 
-
 // Color converters
 const getRgbValue = (red, green, blue) => {
     return `${red}, ${green}, ${blue}`;
@@ -253,7 +251,6 @@ const calculateColors = () => {
     inputHSL.value = getHslValue(red, green, blue);
     inputCMYK.value = getCmykValue(red, green, blue);
     inputHWB.value = getHwbValue(red, green, blue);
-    // inputNCOL.value = getNcolValue(red, green, blue);
     inputNAME.value = getNameValue(red, green, blue);
 
     document.body.style.backgroundColor = `rgb(${red},${green},${blue})`;
